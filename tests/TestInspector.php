@@ -17,21 +17,21 @@ class TestInspector extends PHPUnit_Framework_TestCase {
 				'image', 
 
 				// The input is array-like and will be stored like $model->copy = {image:"/file/path"}
-				'copy[image]',
+				// 'copy[image]',
 
 				// The input is array-like and will be stored like $model->copy = [{image:"/file/path"}]
-				'bullets[][image]', 
+				// 'bullets[][image]', 
 
 				// The input field is "image" and the model field is "background"
-				'bkgd' => 'background', 
+				// 'bkgd' => 'background', 
 
 				// Not so sure if these are reasonable ... though maybe they run via 'saved' or something ...
 
 				// Will be stored via relationship, like $model->banner->image = '/file/path'
-				'banner[image]' => 'banner.image',
+				// 'banner[image]' => 'banner.image',
 
 				// Will be stored via relationship, like $model->features()->save(['image' => '/file/path])
-				'features[][image]' => 'features.image',
+				// 'features[][image]' => 'features.image',
 
 				])
 			->getMock()
@@ -44,11 +44,11 @@ class TestInspector extends PHPUnit_Framework_TestCase {
 	public function testGetInputKeys() {
 		$this->assertEquals([
 			'image',
-			'copy[image]',
-			'bullets[][image]',
-			'bkgd',
-			'banner[image]',
-			'features[][image]',
+			// 'copy[image]',
+			// 'bullets[][image]',
+			// 'bkgd',
+			// 'banner[image]',
+			// 'features[][image]',
 		], $this->inspector->getInputKeys());
 	}
 
