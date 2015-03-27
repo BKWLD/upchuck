@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 /**
  * Respond to model saving and deleting events
  */
-class Obeserver {
+class Observer {
 
 	/**
 	 * @var Illuminate\Http\Request

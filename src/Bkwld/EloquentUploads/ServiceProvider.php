@@ -35,21 +35,21 @@ class ServiceProvider extends LaravelServiceProvider {
 	 */
 	public function register() {
 
-		// Instatiate Flysystem for this package
+		// Instantiate Flysystem for this package
 		$this->app->bind('eloquent_uploads.flysystem_manager', function($app) {
 			return new MountManager([
 				'local' => new Filesystem(
 					new LocalAdapter(public_path().'/uploads/flysystem')
-				);
+				)
 			]);
-		})
+		});
 
-		// Instatiate observer
+		// Instantiate observer
 		$this->app->bind('eloquent_uploads.observer', function($app) {
 			return new Observer($app['request']);
 		});
 
-		// Instatiate storage class
+		// Instantiate storage class
 		$this->app->bind('eloquent_uploads.storage', function($app) {
 			return new Storage($app['eloquent_uploads.flysystem_manager']);
 		});
