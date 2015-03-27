@@ -47,6 +47,7 @@ class Observer {
 		foreach($config as $key => $attribute) {
 			if ($this->request->hasFile($key)) {
 				$dst = $this->storage->moveUpload($this->request->file($key));
+				\Log::info($dst);
 				// Convert $dst to a url
 				// $model->setUploadAttribute($attribute, $url);
 			}
