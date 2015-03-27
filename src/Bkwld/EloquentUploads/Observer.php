@@ -1,6 +1,7 @@
 <?php namespace Bkwld\EloquentUploads;
 
 // Deps
+use Bkwld\EloquentUploads\Storage;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
 
@@ -15,12 +16,19 @@ class Observer {
 	private $request;
 
 	/**
+	 * @var Bkwld\EloquentUploads\Storage
+	 */
+	private $storage;
+
+	/**
 	 * Dependency injection
 	 *
 	 * @param Illuminate\Http\Request $request
+	 * @param Bkwld\EloquentUploads\Storage $storage
 	 */
-	public function __construct(Request $request) {
+	public function __construct(Request $request, Storage $storage) {
 		$this->request = $request;
+		$this->storage = $storage;
 	}
 
 	/**

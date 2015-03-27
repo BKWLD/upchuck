@@ -37,16 +37,23 @@ class ServiceProvider extends LaravelServiceProvider {
 
 		// Instantiate Flysystem for this package
 		$this->app->bind('eloquent_uploads.flysystem_manager', function($app) {
+
+			// Get the temp directory, this is where uploads will be moved from
+			$tmp = ini_get('upload_tmp_dir') ?: sys_get_temp_dir();
+
+			// Get the dst directory from the config
+			$dst = public_path().'/uploads';
+
+			// Create the MountManger instance
 			return new MountManager([
-				'local' => new Filesystem(
-					new LocalAdapter(public_path().'/uploads/flysystem')
-				)
+				'tmp' => new Filesystem(new LocalAdapter($tmp)),
+				'dst' => new Filesystem(new LocalAdapter($dst)),
 			]);
 		});
 
 		// Instantiate observer
 		$this->app->bind('eloquent_uploads.observer', function($app) {
-			return new Observer($app['request']);
+			return new Observer($app['request'], $app['eloquent_uploads.storage']);
 		});
 
 		// Instantiate storage class

@@ -29,7 +29,10 @@ class Storage {
 	 * @return string $dst, Absolute path to the file
 	 */
 	public function moveUpload(UploadedFile $file) {
-
+		$src = 'tmp://'.$file->getFilename();
+		$dst = 'dst://'.$file->getClientOriginalName();
+		$this->manager->move($src, $dst);
+		// dd('Dude');
 	}
 
 }

@@ -1,7 +1,20 @@
 <? namespace Bkwld\EloquentUploads;
 
-
+/**
+ * Adds helper methods for working with the `$upload_attributes` property that
+ * should be defined on the model.
+ */
 trait SupportsUploads {
+
+	/**
+	 * Define a `private $upload_attributes` property like.  It supports syntaxes
+	 * like:
+	 *
+	 * 		private $upload_attributes = [
+	 * 			'image',
+	 * 			'bkgd' => 'image',
+	 * 		];
+	 */
 
 	/**
 	 * Return the raw upload_attributes configuration
@@ -15,16 +28,17 @@ trait SupportsUploads {
 
 	/**
 	 * Massage the attribute configuration so that all keys represent input fields 
-	 * and all values represent model attributes.
+	 * and all values represent model attributes.  If a node doesn't have key and
+	 * val, the val is used for both.
 	 *
 	 * @return array  
 	 */
 	public function getUploadConfig() {
-		$attributes = $this->getUploadAttributes();
-		return array_map(function($val, $key) {
-			if (is_numeric($key)) return $val;
-			return $key;
-		}, $attributes, array_keys($attributes));
+		$config = [];
+		foreach($this->getUploadAttributes() as $key => $val) {
+			$config[is_numeric($key)?$val:$key] = $val;
+		}
+		return $config;
 	}
 
 	/**
