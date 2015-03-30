@@ -1,6 +1,6 @@
 {
-	"name": "bkwld/eloquent-uploads",
-	"description": "TODO",
+	"name": "bkwld/upchuck",
+	"description": "A simple, automatic handler of file uploads for Laravel's Eloquent models using using Flysystem.",
 	"license": "proprietary",
 	"authors": [
 		{
