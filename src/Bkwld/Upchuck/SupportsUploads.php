@@ -42,13 +42,14 @@ trait SupportsUploads {
 	}
 
 	/**
-	 * Set the URL to an uploaded file on the model
+	 * Set a model attribute for an uploaded file to the URL of that file. Uses
+	 * `fill()` so that mass assignment prevention will apply.
 	 *
 	 * @param string $attribute 
 	 * @param string $url 
 	 */
 	public function setUploadAttribute($attribute, $url) {
-		$this->setAttribute($attribute, $url);
+		$this->fill([$attribute => $url]);
 	}
 
 }
