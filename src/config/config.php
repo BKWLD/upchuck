@@ -20,7 +20,6 @@
 		'driver'     => 'local',
 		'path'       => public_path().'/uploads',
 		'visibility' => 'public',
-		// 'cache'      => 'foo',
 
 		/**
 		 * AWS S3 example
@@ -29,11 +28,7 @@
 		// 'key'        => 'your-key',
 		// 'secret'     => 'your-secret',
 		// 'bucket'     => 'your-bucket',
-		// 'region'     => 'your-region',
 		// 'visibility' => 'public',
-
-		/**
-		 */
 
 	],
 
