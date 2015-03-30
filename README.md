@@ -46,3 +46,13 @@ class Person extends Eloquent {
 ### Resizing images
 
 If your app supports uploading files you are probably also dealing with needing to resize uploaded images.  We (BKWLD) use our [Croppa](https://github.com/BKWLD/croppa) package to resize images using specially formatted URLs.  If you are looking for an model-upload package that also resizes images, you might want to check out [Stapler](https://github.com/CodeSleeve/stapler).
+
+
+### Deleting images
+
+If you update a model attribute to a false-y value, Upchuck will delete the old referenced file.  Thus, if your app allows users to delete files, consider using markup like:
+
+```html
+<input type="file" name="image">
+Delete file <input type="checkbox" name="image" value="">
+```
