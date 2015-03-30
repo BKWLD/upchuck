@@ -51,8 +51,15 @@
 	 */
 	'url_generator' => function($path) {
 		switch(Config::get('upchuck::disk.driver')) {
-			case 'local': return URL::asset('/uploads/'.$path);
+
+			// Make local paths relative to the document root.  Not including the hostname
+			// so migrating between enviornments is simpler
+			case 'local': return '/uploads/'.$path;
+
+			// Make a URL using the bucket name
 			case 'awss3': return 'https://'.Config::get('upchuck::disk.bucket').'.s3.amazonaws.com/uploads/'.$path;
+
+			// Return the path if the driver doesn't have converter yet
 			default: return $path;
 		}
 	},
