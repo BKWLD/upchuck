@@ -1,4 +1,4 @@
-<?php namespace Bkwld\EloquentUploads;
+<?php namespace Bkwld\Upchuck;
 
 // Deps
 use Illuminate\Support\ServiceProvider as LaravelServiceProvider;
@@ -23,8 +23,8 @@ class ServiceProvider extends LaravelServiceProvider {
 	public function boot() {
 
 		// Listen for Eloquent saving and deleting
-		$this->app['events']->listen('eloquent.saving:*', 'eloquent_uploads.observer@onSaving');
-		$this->app['events']->listen('eloquent.deleting:*', 'eloquent_uploads.observer@onDeleting');
+		$this->app['events']->listen('eloquent.saving:*', 'upchuck.observer@onSaving');
+		$this->app['events']->listen('eloquent.deleting:*', 'upchuck.observer@onDeleting');
 
 	}
 
@@ -36,12 +36,12 @@ class ServiceProvider extends LaravelServiceProvider {
 	public function register() {
 
 		// Instantiate the disk for the destination
-		$this->app->bind('eloquent_uploads.dst', function($app) {
+		$this->app->bind('upchuck.dst', function($app) {
 			return new Filesystem(new LocalAdapter(public_path().'/uploads'));
 		});
 
 		// Instantiate Flysystem for this package
-		$this->app->bind('eloquent_uploads.manager', function($app) {
+		$this->app->bind('upchuck.manager', function($app) {
 
 			// Get the temp directory, this is where uploads will be moved from
 			$tmp = ini_get('upload_tmp_dir') ?: sys_get_temp_dir();
@@ -49,18 +49,18 @@ class ServiceProvider extends LaravelServiceProvider {
 			// Create the MountManger instance
 			return new MountManager([
 				'tmp' => new Filesystem(new LocalAdapter($tmp)),
-				'dst' => $app['eloquent_uploads.dst'],
+				'dst' => $app['upchuck.dst'],
 			]);
 		});
 
 		// Instantiate observer
-		$this->app->bind('eloquent_uploads.observer', function($app) {
-			return new Observer($app['request'], $app['eloquent_uploads.storage']);
+		$this->app->bind('upchuck.observer', function($app) {
+			return new Observer($app['request'], $app['upchuck.storage']);
 		});
 
 		// Instantiate storage class
-		$this->app->bind('eloquent_uploads.storage', function($app) {
-			return new Storage($app['eloquent_uploads.manger']);
+		$this->app->bind('upchuck.storage', function($app) {
+			return new Storage($app['upchuck.manager']);
 		});
 
 	}
@@ -72,10 +72,10 @@ class ServiceProvider extends LaravelServiceProvider {
 	 */
 	public function provides() {
 		return array(
-			'eloquent_uploads.dst',
-			'eloquent_uploads.manger',
-			'eloquent_uploads.observer',
-			'eloquent_uploads.storage',
+			'upchuck.dst',
+			'upchuck.manager',
+			'upchuck.observer',
+			'upchuck.storage',
 		);
 	}
 

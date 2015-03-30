@@ -1,7 +1,7 @@
-<?php namespace Bkwld\EloquentUploads;
+<?php namespace Bkwld\Upchuck;
 
 // Deps
-use Bkwld\EloquentUploads\Storage;
+use Bkwld\Upchuck\Storage;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
 
@@ -16,7 +16,7 @@ class Observer {
 	private $request;
 
 	/**
-	 * @var Bkwld\EloquentUploads\Storage
+	 * @var Bkwld\Upchuck\Storage
 	 */
 	private $storage;
 
@@ -24,7 +24,7 @@ class Observer {
 	 * Dependency injection
 	 *
 	 * @param Illuminate\Http\Request $request
-	 * @param Bkwld\EloquentUploads\Storage $storage
+	 * @param Bkwld\Upchuck\Storage $storage
 	 */
 	public function __construct(Request $request, Storage $storage) {
 		$this->request = $request;
@@ -40,7 +40,7 @@ class Observer {
 	public function onSaving(Model $model) {
 
 		// Check that the model supports uploads.
-		if (!in_array('Bkwld\EloquentUploads\SupportsUploads', class_uses($model))
+		if (!in_array('Bkwld\Upchuck\SupportsUploads', class_uses($model))
 			|| !($config = $model->getUploadConfig())) return;
 
 		// Loop through the attributes and see if the input contains files keyed as such

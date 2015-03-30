@@ -1,4 +1,4 @@
-<?php namespace Bkwld\EloquentUploads;
+<?php namespace Bkwld\Upchuck;
 
 // Deps
 use League\Flysystem\MountManager;

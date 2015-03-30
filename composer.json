@@ -19,7 +19,7 @@
 	},
 	"autoload": {
 		"psr-0": {
-			"Bkwld\\EloquentUploads": "src/"
+			"Bkwld\\Upchuck": "src/"
 		}
 	},
 	"minimum-stability": "dev"
