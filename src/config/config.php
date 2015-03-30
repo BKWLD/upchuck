@@ -1,7 +1,11 @@
 <?php return [
 	
 	/**
-	 * Flysystem mount config for the destination of your uploads.
+	 * Flysystem mount config for the destination of your uploads. For other 
+	 * examples, check out the source of GrahamCampbell/Laravel-Flysystem config.
+	 * That package's factory class s used to instante Flysystem in Upchuck and 
+	 * all of it's configs are supported.
+	 * https://github.com/GrahamCampbell/Laravel-Flysystem/blob/1.0/src/config/config.php
 	 */
 	'disk' => [
 
@@ -24,15 +28,15 @@
 		// 'visibility' => 'public',
 
 		/**
-		 * For other exmamples, check out the source of 
-		 * GrahamCampbell/Laravel-Flysystem config.  That package's factory class
-		 * is used to instante Flysystem in Upchuck and all of it's configs are
-		 * supported.
-		 * 
-		 * https://github.com/GrahamCampbell/Laravel-Flysystem/blob/1.0/src/config/config.php
 		 */
 
 	],
+
+	/**
+	 * Enable Flysystem caching using Laravel's current cache provider
+	 * http://flysystem.thephpleague.com/caching/
+	 */
+	'cache' => true,
 
 	/**
 	 * Parse the URL from the absolute path to file using this

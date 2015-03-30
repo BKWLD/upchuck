@@ -52,7 +52,7 @@ class ServiceProvider extends LaravelServiceProvider {
 			$manager = new Manager($app['config'], $factory);
 
 			// Massage the Upchuck config to what GrahamCampbell\Flysystem is expecting
-			return $factory->make($manager->getConnectionConfig(null), $manager);
+			return $factory->make($manager->getConnectionConfig(), $manager);
 		});
 
 		// Instantiate Flysystem's manager for this package

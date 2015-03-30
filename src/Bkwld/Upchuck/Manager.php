@@ -23,42 +23,40 @@ class Manager extends GrahamCampbellFlysystemManager {
 	/**
 	 * Get the configuration for a connection.
 	 *
-	 * @param string $name
-	 * @throws \InvalidArgumentException
+	 * @param string $name Not used but part of parent
+	 * @throws InvalidArgumentException
 	 * @return array
 	 */
-	public function getConnectionConfig($name) {
+	public function getConnectionConfig($name = null) {
 
 		// Lookup the connection config
 		$config = $this->config->get($this->getConfigName().'::disk');
 
 		// Add cache info the config
-		// if (is_string($cache = array_get($config, 'cache'))) {
-		// 	$config['cache'] = $this->getCacheConfig($cache);
-		// }
+		if ($this->config->get($this->getConfigName().'::cache')) {
+			$config['cache'] = $this->getCacheConfig();
+		}
 
+		// Use the driver as the name.
 		$config['name'] = $config['driver'];
 
+		// Return adapter config in the format GrahamCampbell/Flysystem expects
 		return $config;
 	}
 
 	/**
-	 * Get the cache configuration.
+	 * Get the cache configuration.  Upchuck only uses Illuminate caching.
 	 *
-	 * @param string $name
-	 * @throws \InvalidArgumentException
+	 * @param string $name Not used but part of parent
+	 * @throws InvalidArgumentException
 	 * @return array
 	 */
-	protected function getCacheConfig($name) {
-		$cache = $this->config->get($this->getConfigName().'::cache');
-
-		if (!is_array($config = array_get($cache, $name)) && !$config) {
-				throw new InvalidArgumentException("Cache [$name] not configured.");
-		}
-
-		$config['name'] = $name;
-
-		return $config;
+	protected function getCacheConfig($name = null) {
+		return [
+			'name'      => 'illuminate',
+			'driver'    => 'illuminate',
+			'key'       => 'upchuck',
+		];
 	}
 
 }
