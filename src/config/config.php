@@ -28,6 +28,7 @@
 		// 'key'        => 'your-key',
 		// 'secret'     => 'your-secret',
 		// 'bucket'     => 'your-bucket',
+		// 'prefix'     => 'uploads/',
 		// 'visibility' => 'public',
 
 	],
@@ -42,10 +43,18 @@
 	'cache' => false,
 
 	/**
-	 * Parse the URL from the absolute path to file using this
-	 * regex.  Make sure the absolute path can be found in the $1
-	 * regex reference.
+	 * A closure that takes the path of the uploaded image (relative to the config
+	 * of your disk) and converts it to a URL that could be rendered in HTML.
+	 * 
+	 * @param string $path A relative path to the file on the disk
+	 * @return string A URL to the resource that could be rendered in HTML
 	 */
-	'parse_url' => public_path().'(.*)',
+	'url_generator' => function($path) {
+		switch(Config::get('upchuck::disk.driver')) {
+			case 'local': return URL::asset('/uploads/'.$path);
+			case 'awss3': return 'https://'.Config::get('upchuck::disk.bucket').'.s3.amazonaws.com/uploads/'.$path;
+			default: return $path;
+		}
+	},
 
 ];

@@ -40,18 +40,17 @@ class Storage {
 	 * to the configured location
 	 *
 	 * @param Symfony\Component\HttpFoundation\File\UploadedFile $file 
-	 * @return string $dst, Absolute path to the file
+	 * @return string $path The path of the file on the disk, relateive to the disk
 	 */
 	public function moveUpload(UploadedFile $file) {
 
 		// Nest the uploaded file into unique sub directory and a unqiue name
-		$dst = $this->makeNestedAndUniquePath($file->getClientOriginalName());
+		$path = $this->makeNestedAndUniquePath($file->getClientOriginalName());
 
-		// Move the uploaded file to the destination using Flysystem
-		$this->manager->move('tmp://'.$file->getFilename(), 'disk://'.$dst);
-
-		// Return the dst address
-		return $dst;
+		// Move the uploaded file to the destination using Flysystem and return
+		// the new path
+		$this->manager->move('tmp://'.$file->getFilename(), 'disk://'.$path);
+		return $path;
 	}
 
 	/**
