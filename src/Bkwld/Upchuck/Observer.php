@@ -32,15 +32,15 @@ class Observer {
 	}
 
 	/**
-	 * A model is saving
+	 * A model is saving, check for files being uploaded
 	 *
 	 * @param Illuminate\Database\Eloquent\Model $model 
 	 * @return void
 	 */
 	public function onSaving(Model $model) {
 
-		// Check that the model supports uploads.
-		if (!in_array('Bkwld\Upchuck\SupportsUploads', class_uses($model))
+		// Check that the model supports uploads through Upchuck
+		if (!$this->supportsUploads($model)
 			|| !($config = $model->getUploadConfig())) return;
 
 		// Loop through the all of the upload attributes ...
@@ -61,13 +61,32 @@ class Observer {
 	}
 
 	/**
-	 * A model is deleting
+	 * A model has been deleted, trash all of it's files
 	 *
 	 * @param Illuminate\Database\Eloquent\Model $model 
 	 * @return void
 	 */
-	public function onDeleting(Model $model) {
+	public function onDeleted(Model $model) {
 
+		// Check that the model supports uploads through Upchuck
+		if (!$this->supportsUploads($model)
+			|| !($config = $model->getUploadConfig())) return;
+
+		// Loop through the all of the upload attributes ...
+		foreach($config as $key => $attribute) {
+			$this->storage->delete($model->getAttribute($attribute));
+		}
+
+	}
+
+	/**
+	 * Check that the model supports uploads through Upchuck
+	 *
+	 * @param Illuminate\Database\Eloquent\Model $model 
+	 * @return boolean 
+	 */
+	public function supportsUploads($model) {
+		return in_array('Bkwld\Upchuck\SupportsUploads', class_uses($model));
 	}
 
 }

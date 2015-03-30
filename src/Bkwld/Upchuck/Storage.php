@@ -99,8 +99,8 @@ class Storage {
 		// Convert to a path
 		$path = substr($url, strlen($this->url_prefix));
 
-		// Delete the path
-		$this->manager->delete('disk://'.$path);
+		// Delete the path if it still exists
+		if ($this->manager->has('disk://'.$path)) $this->manager->delete('disk://'.$path);
 	}
 
 }
