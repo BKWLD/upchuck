@@ -29,10 +29,16 @@ class Storage {
 	private $manager;
 
 	/**
+	 * @var string 
+	 */
+	private $url_prefix;
+
+	/**
 	 * Dependency injection
 	 */
-	public function __construct(MountManager $manager) {
+	public function __construct(MountManager $manager, $url_prefix) {
 		$this->manager = $manager;
+		$this->url_prefix = $url_prefix;
 	}
 
 	/**
@@ -40,7 +46,7 @@ class Storage {
 	 * to the configured location
 	 *
 	 * @param Symfony\Component\HttpFoundation\File\UploadedFile $file 
-	 * @return string $path The path of the file on the disk, relateive to the disk
+	 * @return string $url A URL to to the file, resolveable in HTML
 	 */
 	public function moveUpload(UploadedFile $file) {
 
@@ -50,7 +56,9 @@ class Storage {
 		// Move the uploaded file to the destination using Flysystem and return
 		// the new path
 		$this->manager->move('tmp://'.$file->getFilename(), 'disk://'.$path);
-		return $path;
+
+		// Return the URL of the upload.
+		return $this->url_prefix.$path;
 	}
 
 	/**
@@ -78,6 +86,21 @@ class Storage {
 		while ($this->manager->has('disk://'.($path = $dir.$file.'-'.$i.'.'.$ext))) { $i++; }
 		return $path;
 
+	}
+
+	/**
+	 * Delete an upload
+	 *
+	 * @param string $url A URL like was returned from moveUpload()
+	 * @return void 
+	 */
+	public function delete($url) {
+
+		// Convert to a path
+		$path = substr($url, strlen($this->url_prefix));
+
+		// Delete the path
+		$this->manager->delete('disk://'.$path);
 	}
 
 }

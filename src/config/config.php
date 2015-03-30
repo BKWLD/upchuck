@@ -43,25 +43,10 @@
 	'cache' => false,
 
 	/**
-	 * A closure that takes the path of the uploaded image (relative to the config
-	 * of your disk) and converts it to a URL that could be rendered in HTML.
-	 * 
-	 * @param string $path A relative path to the file on the disk
-	 * @return string A URL to the resource that could be rendered in HTML
+	 * A string that is prepended to the path of the upload (relative to its disk)
+	 * to convert it from a path to URL resolveable in HTML.
 	 */
-	'url_generator' => function($path) {
-		switch(Config::get('upchuck::disk.driver')) {
-
-			// Make local paths relative to the document root.  Not including the hostname
-			// so migrating between enviornments is simpler
-			case 'local': return '/uploads/'.$path;
-
-			// Make a URL using the bucket name
-			case 'awss3': return 'https://'.Config::get('upchuck::disk.bucket').'.s3.amazonaws.com/uploads/'.$path;
-
-			// Return the path if the driver doesn't have converter yet
-			default: return $path;
-		}
-	},
+	'url_prefix' => '/uploads/',
+	// 'url_prefix' => 'https://your-bucket.s3.amazonaws.com/uploads/',
 
 ];
