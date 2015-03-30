@@ -1,5 +1,7 @@
 # Upchuck
 
+[![Packagist](https://img.shields.io/packagist/v/bkwld/upchuck.svg)](https://packagist.org/packages/bkwld/upchuck)
+
 Upchuck is a simple, automatic handler of file uploads for [Laravel's](http://laravel.com/) [Eloquent](http://laravel.com/docs/eloquent) models using using [Flysystem](http://flysystem.thephpleague.com/).  It does not attempt to do anything besides let the developer treat file uploads like regular input fields.  It does this by listening to Eloquent `saving` events,  checking the request input for files with names that you have whitelisted, pushing those files to "disk" of your choosing, and then storing the publically accessible URL in the model attribute for that input.
 
 
