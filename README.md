@@ -1,3 +1,3 @@
-# Elqouent Uplaods
+# Upchuck
 
-Treat file uploads like simple text inputs.
+A simple, automatic handler of file uploads using Flysystem for Laravel's Eloquent models.
