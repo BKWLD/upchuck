@@ -48,7 +48,7 @@ class Storage {
 		$dst = $this->makeNestedAndUniquePath($file->getClientOriginalName());
 
 		// Move the uploaded file to the destination using Flysystem
-		$this->manager->move('tmp://'.$file->getFilename(), 'dst://'.$dst);
+		$this->manager->move('tmp://'.$file->getFilename(), 'disk://'.$dst);
 
 		// Return the dst address
 		return $dst;
@@ -70,13 +70,13 @@ class Storage {
 
 		// If this file doesn't already exist, return it
 		$path = $dir.$filename;
-		if (!$this->manager->has('dst://'.$path)) return $path;
+		if (!$this->manager->has('disk://'.$path)) return $path;
 
 		// Get a unique filename for the file and return it
 		$file = pathinfo($filename, PATHINFO_FILENAME);
 		$i = 1;
 		$ext = pathinfo($filename, PATHINFO_EXTENSION);
-		while ($this->manager->has('dst://'.($path = $dir.$file.'-'.$i.'.'.$ext))) { $i++; }
+		while ($this->manager->has('disk://'.($path = $dir.$file.'-'.$i.'.'.$ext))) { $i++; }
 		return $path;
 
 	}

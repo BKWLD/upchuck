@@ -40,7 +40,7 @@ class ServiceProvider extends LaravelServiceProvider {
 	public function register() {
 
 		// Instantiate the disk for the destination
-		$this->app->bind('upchuck.dst', function($app) {
+		$this->app->bind('upchuck.disk', function($app) {
 
 			// Build GrahamCampbell\Flysystem's factory for making Flysystem instances
 			$adapter = new AdapterFactory();
@@ -64,7 +64,7 @@ class ServiceProvider extends LaravelServiceProvider {
 			// Create the MountManger instance
 			return new MountManager([
 				'tmp' => new Filesystem(new LocalAdapter($tmp)),
-				'dst' => $app['upchuck.dst'],
+				'disk' => $app['upchuck.disk'],
 			]);
 		});
 
@@ -87,7 +87,7 @@ class ServiceProvider extends LaravelServiceProvider {
 	 */
 	public function provides() {
 		return array(
-			'upchuck.dst',
+			'upchuck.disk',
 			'upchuck.manager',
 			'upchuck.observer',
 			'upchuck.storage',

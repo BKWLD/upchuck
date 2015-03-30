@@ -1,9 +1,9 @@
 <?php return [
 	
 	/**
-	 * Flysystem config for the destination for the crops
+	 * Flysystem mount config for the destination of your uploads.
 	 */
-	'dst' => [
+	'disk' => [
 
 		/**
 		 * Local exaample
