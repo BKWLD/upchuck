@@ -5,7 +5,12 @@
 	 * examples, check out the source of GrahamCampbell/Laravel-Flysystem config.
 	 * That package's factory class s used to instante Flysystem in Upchuck and 
 	 * all of it's configs are supported.
-	 * https://github.com/GrahamCampbell/Laravel-Flysystem/blob/1.0/src/config/config.php
+	 * 
+	 * See: https://github.com/GrahamCampbell/Laravel-Flysystem/blob/1.0/src/config/config.php
+	 *
+	 * Note, for each driver except "local", you must require the adapter package:
+	 *
+	 * See: https://github.com/thephpleague/flysystem#adapters
 	 */
 	'disk' => [
 
@@ -33,10 +38,13 @@
 	],
 
 	/**
-	 * Enable Flysystem caching using Laravel's current cache provider
-	 * http://flysystem.thephpleague.com/caching/
+	 * Enable Flysystem caching using Laravel's current cache provider.  You must
+	 * require Flysystem's cache adapter package, league/flysystem-cached-adapter,
+	 * if enabled.  You should enable this if you are using a non-local disk.
+	 * 
+	 * See: http://flysystem.thephpleague.com/caching/
 	 */
-	'cache' => true,
+	'cache' => false,
 
 	/**
 	 * Parse the URL from the absolute path to file using this
