@@ -31,14 +31,14 @@ trait SupportsUploads {
 	 * and all values represent model attributes.  If a node doesn't have key and
 	 * val, the val is used for both.
 	 *
-	 * @return array  
+	 * @return array Keys are input keys, values are model attributes
 	 */
-	public function getUploadConfig() {
-		$config = [];
+	public function getUploadMap() {
+		$map = [];
 		foreach($this->getUploadAttributes() as $key => $val) {
-			$config[is_numeric($key)?$val:$key] = $val;
+			$map[is_numeric($key)?$val:$key] = $val;
 		}
-		return $config;
+		return $map;
 	}
 
 	/**

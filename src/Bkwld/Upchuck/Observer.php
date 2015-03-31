@@ -41,10 +41,10 @@ class Observer {
 
 		// Check that the model supports uploads through Upchuck
 		if (!$this->supportsUploads($model)
-			|| !($config = $model->getUploadConfig())) return;
+			|| !($map = $model->getUploadMap())) return;
 
 		// Loop through the all of the upload attributes ...
-		foreach($config as $key => $attribute) {
+		foreach($map as $key => $attribute) {
 
 			// If there is a file in the input, move the upload to the
 			// config-ed disk and save the resulting URL on the model.
@@ -70,10 +70,10 @@ class Observer {
 
 		// Check that the model supports uploads through Upchuck
 		if (!$this->supportsUploads($model)
-			|| !($config = $model->getUploadConfig())) return;
+			|| !($map = $model->getUploadMap())) return;
 
 		// Loop through the all of the upload attributes ...
-		foreach($config as $key => $attribute) {
+		foreach($map as $key => $attribute) {
 			$this->storage->delete($model->getAttribute($attribute));
 		}
 
