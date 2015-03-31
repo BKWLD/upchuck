@@ -27,8 +27,9 @@ class ServiceProvider extends LaravelServiceProvider {
 		$this->package('bkwld/upchuck');
 
 		// Listen for Eloquent saving and deleting
-		$this->app['events']->listen('eloquent.saving:*', 'upchuck.observer@onSaving');
-		$this->app['events']->listen('eloquent.deleted:*', 'upchuck.observer@onDeleted');
+		$priority = $this->app['config']->get('upchuck::listen_priority');
+		$this->app['events']->listen('eloquent.saving:*', 'upchuck.observer@onSaving', $priority);
+		$this->app['events']->listen('eloquent.deleted:*', 'upchuck.observer@onDeleted', $priority);
 
 	}
 
