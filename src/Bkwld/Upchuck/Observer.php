@@ -51,6 +51,12 @@ class Observer {
 			if ($this->request->hasFile($key)) {
 				$url = $this->storage->moveUpload($this->request->file($key));
 				$model->setUploadAttribute($attribute, $url);
+
+				// Remove the file from the request object after it's been processed. 
+				// This prevents other models that may be touched during the processing 
+				// of this request (like because of event handlers) from trying to act 
+				// on this upload.
+				$this->request->files->remove($key);
 			}
 
 			// If the attribute field is dirty, delete the old image
