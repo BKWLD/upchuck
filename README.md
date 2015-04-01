@@ -56,3 +56,20 @@ If you update a model attribute to a false-y value, Upchuck will delete the old 
 <input type="file" name="image">
 Delete file <input type="checkbox" name="image" value="">
 ```
+
+### Array-ish inputs
+
+If your field is like this:
+
+```html
+<input type="file" name="types[marquee][image]">
+```
+
+Setup your `$upload_attributes` like:
+
+```php
+private $upload_attributes = [
+	'types.stats.image' => 'image',
+];
+```
+
