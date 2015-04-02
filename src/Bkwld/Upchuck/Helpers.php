@@ -46,7 +46,7 @@ class Helpers {
 	 * @return string
 	 */
 	public function url($path) {
-		return $this->config['url_prefix'].$path;
+		return $this->config['url_prefix'].ltrim($path, '/');
 	}
 
 }
