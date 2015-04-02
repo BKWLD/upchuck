@@ -40,6 +40,11 @@ class ServiceProvider extends LaravelServiceProvider {
 	 */
 	public function register() {
 
+		// Instantiate helpers
+		$this->app->bind('upchuck', function($app) {
+			return new Helpers($app['config']->get('upchuck::config'));
+		});
+
 		// Instantiate the disk for the destination
 		$this->app->bind('upchuck.disk', function($app) {
 
@@ -77,7 +82,7 @@ class ServiceProvider extends LaravelServiceProvider {
 
 		// Instantiate storage class
 		$this->app->bind('upchuck.storage', function($app) {
-			return new Storage($app['upchuck.manager'], $app['config']->get('upchuck::url_prefix'));
+			return new Storage($app['upchuck.manager'], $app['upchuck']);
 		});
 
 	}
@@ -89,6 +94,7 @@ class ServiceProvider extends LaravelServiceProvider {
 	 */
 	public function provides() {
 		return array(
+			'upchuck',
 			'upchuck.disk',
 			'upchuck.manager',
 			'upchuck.observer',

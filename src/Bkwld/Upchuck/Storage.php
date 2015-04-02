@@ -1,6 +1,7 @@
 <?php namespace Bkwld\Upchuck;
 
 // Deps
+use Bkwld\Upchuck\Helpers;
 use League\Flysystem\MountManager;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 
@@ -24,21 +25,22 @@ class Storage {
 	private $length = 16;
 
 	/**
+	 * @var Bkwld\Upchuck\Helpers 
+	 */
+	private $helpers;
+
+	/**
 	 * @var League\Flysystem\MountManager
 	 */
 	private $manager;
 
-	/**
-	 * @var string 
-	 */
-	private $url_prefix;
 
 	/**
 	 * Dependency injection
 	 */
-	public function __construct(MountManager $manager, $url_prefix) {
+	public function __construct(MountManager $manager, Helpers $helpers) {
 		$this->manager = $manager;
-		$this->url_prefix = $url_prefix;
+		$this->helpers = $helpers;
 	}
 
 	/**
@@ -58,7 +60,7 @@ class Storage {
 		$this->manager->move('tmp://'.$file->getFilename(), 'disk://'.$path);
 
 		// Return the URL of the upload.
-		return $this->url_prefix.$path;
+		return $this->helpers->url($path);
 	}
 
 	/**
@@ -97,7 +99,7 @@ class Storage {
 	public function delete($url) {
 
 		// Convert to a path
-		$path = substr($url, strlen($this->url_prefix));
+		$path = $this->helpers->path($url);
 
 		// Delete the path if it still exists
 		if ($this->manager->has('disk://'.$path)) $this->manager->delete('disk://'.$path);
