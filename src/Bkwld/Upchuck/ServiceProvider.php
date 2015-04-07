@@ -41,12 +41,12 @@ class ServiceProvider extends LaravelServiceProvider {
 	public function register() {
 
 		// Instantiate helpers
-		$this->app->bind('upchuck', function($app) {
+		$this->app->singleton('upchuck', function($app) {
 			return new Helpers($app['config']->get('upchuck::config'));
 		});
 
 		// Instantiate the disk for the destination
-		$this->app->bind('upchuck.disk', function($app) {
+		$this->app->singleton('upchuck.disk', function($app) {
 
 			// Build GrahamCampbell\Flysystem's factory for making Flysystem instances
 			$adapter = new AdapterFactory();
@@ -62,7 +62,7 @@ class ServiceProvider extends LaravelServiceProvider {
 		});
 
 		// Instantiate Flysystem's manager for this package
-		$this->app->bind('upchuck.manager', function($app) {
+		$this->app->singleton('upchuck.manager', function($app) {
 
 			// Get the temp directory, this is where uploads will be moved from
 			$tmp = ini_get('upload_tmp_dir') ?: sys_get_temp_dir();
@@ -76,12 +76,12 @@ class ServiceProvider extends LaravelServiceProvider {
 
 		// Instantiate observer which handles model save / delete and delegates
 		// out the saving of files
-		$this->app->bind('upchuck.observer', function($app) {
+		$this->app->singleton('upchuck.observer', function($app) {
 			return new Observer($app['request'], $app['upchuck.storage']);
 		});
 
 		// Instantiate storage class
-		$this->app->bind('upchuck.storage', function($app) {
+		$this->app->singleton('upchuck.storage', function($app) {
 			return new Storage($app['upchuck.manager'], $app['upchuck']);
 		});
 
