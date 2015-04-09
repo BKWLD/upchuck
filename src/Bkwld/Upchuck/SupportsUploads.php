@@ -1,4 +1,4 @@
-<? namespace Bkwld\Upchuck;
+<?php namespace Bkwld\Upchuck;
 
 /**
  * Adds helper methods for working with the `$upload_attributes` property that
