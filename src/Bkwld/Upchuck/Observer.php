@@ -86,13 +86,14 @@ class Observer {
 	}
 
 	/**
-	 * Check that the model supports uploads through Upchuck
+	 * Check that the model supports uploads through Upchuck.  Not detecting the
+	 * trait because it doesn't report to subclasses.
 	 *
 	 * @param Illuminate\Database\Eloquent\Model $model 
 	 * @return boolean 
 	 */
 	public function supportsUploads($model) {
-		return in_array('Bkwld\Upchuck\SupportsUploads', class_uses($model));
+		return method_exists($model, 'getUploadMap');
 	}
 
 }
