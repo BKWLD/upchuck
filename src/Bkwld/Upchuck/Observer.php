@@ -80,7 +80,8 @@ class Observer {
 
 		// Loop through the all of the upload attributes ...
 		foreach($map as $key => $attribute) {
-			$this->storage->delete($model->getAttribute($attribute));
+			if (!$path = $model->getAttribute($attribute)) continue;
+			$this->storage->delete($path);
 		}
 
 	}
