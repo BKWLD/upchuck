@@ -7,14 +7,17 @@
 trait SupportsUploads {
 
 	/**
-	 * Define a `private $upload_attributes` property like.  It supports syntaxes
-	 * like:
+	 * The list of uploadable attributes.  If a key-val pair, the key is the
+	 * input attribute and the value is the model attribtue. Example:
 	 *
-	 * 		private $upload_attributes = [
-	 * 			'image',
-	 * 			'bkgd' => 'image',
-	 * 		];
+	 *     private $upload_attributes = [
+	 *       'image',
+	 *       'bkgd' => 'image',
+	 *     ];
+	 * 
+	 * @var array
 	 */
+	 private $upload_attributes = [];
 
 	/**
 	 * Return the raw upload_attributes configuration
