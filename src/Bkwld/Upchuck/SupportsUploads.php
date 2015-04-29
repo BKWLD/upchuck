@@ -17,7 +17,6 @@ trait SupportsUploads {
 	 * 
 	 * @var array
 	 */
-	 protected $upload_attributes = [];
 
 	/**
 	 * Return the raw upload_attributes configuration
