@@ -25,7 +25,7 @@ class Person extends Eloquent {
 	use Bkwld\Upchuck\SupportsUploads;
 
 	// Define the uploadable attributes
-	private $upload_attributes = [
+	protected $upload_attributes = [
 
 		// Both the file input field and the model attribute are named "image"
 		'image',
@@ -68,7 +68,7 @@ If your field is like this:
 Setup your `$upload_attributes` like:
 
 ```php
-private $upload_attributes = [
+protected $upload_attributes = [
 	'types.stats.image' => 'image',
 ];
 ```
