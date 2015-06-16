@@ -70,6 +70,10 @@ class Storage {
 	 * @return string New path and filename
 	 */
 	public function makeNestedAndUniquePath($filename) {
+		
+		// Remove unsafe characters from the filename
+		// https://regex101.com/r/mJ3sI5/1
+		$filename = preg_replace('#[^\w-_\.]#i', '_', $filename);
 
 		// Create nested folders to store the file in
 		$dir = '';
