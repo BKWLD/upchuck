@@ -11,7 +11,7 @@ class Facade extends \Illuminate\Support\Facades\Facade {
 	 * @param string $path 
 	 * @return string
 	 */
-	public function url($path) {
+	public static function url($path) {
 		return static::$app['upchuck']->url($path);
 	}
 
