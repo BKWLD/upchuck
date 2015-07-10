@@ -45,6 +45,12 @@ class ServiceProvider extends LaravelServiceProvider {
 			return new Helpers($app['config']->get('upchuck::config'));
 		});
 
+		// Instantiate the disk for the tmp directory, where the image was uploaded
+		$this->app->singleton('upchuck.tmp', function($app) {
+			$tmp = ini_get('upload_tmp_dir') ?: sys_get_temp_dir();
+			return new Filesystem(new LocalAdapter($tmp));
+		});
+
 		// Instantiate the disk for the destination
 		$this->app->singleton('upchuck.disk', function($app) {
 
@@ -63,13 +69,8 @@ class ServiceProvider extends LaravelServiceProvider {
 
 		// Instantiate Flysystem's manager for this package
 		$this->app->singleton('upchuck.manager', function($app) {
-
-			// Get the temp directory, this is where uploads will be moved from
-			$tmp = ini_get('upload_tmp_dir') ?: sys_get_temp_dir();
-
-			// Create the MountManger instance
 			return new MountManager([
-				'tmp' => new Filesystem(new LocalAdapter($tmp)),
+				'tmp' => $app['upchuck.tmp'],
 				'disk' => $app['upchuck.disk'],
 			]);
 		});
@@ -96,6 +97,7 @@ class ServiceProvider extends LaravelServiceProvider {
 		return array(
 			'upchuck',
 			'upchuck.disk',
+			'upchuck.tmp',
 			'upchuck.manager',
 			'upchuck.observer',
 			'upchuck.storage',
