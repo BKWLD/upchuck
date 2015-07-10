@@ -30,12 +30,15 @@ class Helpers {
 	}
 
 	/**
-	 * Get the path form a URL to the disk
+	 * Get the path on the disk given the URL.  If the url_prefix is absolute-path
+	 * style, get the path from the URL before subtracting the prefix.
 	 *
-	 * @param string $url 
+	 * @param string $url A full URL (https://....)
 	 * @return string 
 	 */
 	public function path($url) {
+		$prefix = $this->config['url_prefix'];
+		if (preg_match('#^/#', $prefix)) $url = parse_url($url, PHP_URL_PATH);
 		return substr($url, strlen($this->config['url_prefix']));
 	}
 
