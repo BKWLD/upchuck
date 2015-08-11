@@ -12,22 +12,19 @@ use League\Flysystem\MountManager;
 class ServiceProvider extends LaravelServiceProvider {
 
 	/**
-	 * Indicates if loading of the provider is deferred.
-	 *
-	 * @var bool
-	 */
-	protected $defer = false;
-
-	/**
 	 * Bootstrap the application events.
 	 *
 	 * @return void
 	 */
 	public function boot() {
-		$this->package('bkwld/upchuck');
+
+		// Registers the config file for publishing to app directory
+		$this->publishes([
+			__DIR__.'/../../config/config.php' => config_path('upchuck.php')
+		], 'upchuck');
 
 		// Listen for Eloquent saving and deleting
-		$priority = $this->app['config']->get('upchuck::listen_priority');
+		$priority = $this->app['config']->get('upchuck');
 		$this->app['events']->listen('eloquent.saving:*', 'upchuck.observer@onSaving', $priority);
 		$this->app['events']->listen('eloquent.deleted:*', 'upchuck.observer@onDeleted', $priority);
 
@@ -40,9 +37,12 @@ class ServiceProvider extends LaravelServiceProvider {
 	 */
 	public function register() {
 
+		// Merges package config with user config
+		$this->mergeConfigFrom(__DIR__.'/../../config/config.php', 'upchuck');
+
 		// Instantiate helpers
 		$this->app->singleton('upchuck', function($app) {
-			return new Helpers($app['config']->get('upchuck::config'));
+			return new Helpers($this->getConfig());
 		});
 
 		// Instantiate the disk for the tmp directory, where the image was uploaded

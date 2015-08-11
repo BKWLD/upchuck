@@ -30,10 +30,10 @@ class Manager extends GrahamCampbellFlysystemManager {
 	public function getConnectionConfig($name = null) {
 
 		// Lookup the connection config
-		$config = $this->config->get($this->getConfigName().'::disk');
+		$config = $this->config->get($this->getConfigName().'.disk');
 
 		// Add cache info the config
-		if ($this->config->get($this->getConfigName().'::cache')) {
+		if ($this->config->get($this->getConfigName().'.cache')) {
 			$config['cache'] = $this->getCacheConfig();
 		}
 
