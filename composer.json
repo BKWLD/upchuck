@@ -1,7 +1,7 @@
 {
 	"name": "bkwld/upchuck",
 	"description": "A simple, automatic handler of file uploads for Laravel's Eloquent models using using Flysystem.",
-	"license": "proprietary",
+	"license": "MIT",
 	"authors": [
 		{
 			"name": "Robert Reinhard",
@@ -24,6 +24,5 @@
 		"psr-0": {
 			"Bkwld\\Upchuck": "src/"
 		}
-	},
-	"minimum-stability": "dev"
+	}
 }
