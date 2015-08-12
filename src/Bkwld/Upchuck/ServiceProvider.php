@@ -3,7 +3,7 @@
 // Deps
 use GrahamCampbell\Flysystem\Adapters\ConnectionFactory as AdapterFactory;
 use GrahamCampbell\Flysystem\Cache\ConnectionFactory as CacheFactory;
-use GrahamCampbell\Flysystem\Factories\FlysystemFactory;
+use GrahamCampbell\Flysystem\FlysystemFactory;
 use Illuminate\Support\ServiceProvider as LaravelServiceProvider;
 use League\Flysystem\Adapter\Local as LocalAdapter;
 use League\Flysystem\Filesystem;
