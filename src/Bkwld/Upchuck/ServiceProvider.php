@@ -24,7 +24,7 @@ class ServiceProvider extends LaravelServiceProvider {
 		], 'upchuck');
 
 		// Listen for Eloquent saving and deleting
-		$priority = $this->app['config']->get('upchuck');
+		$priority = $this->app['config']->get('upchuck.priority');
 		$this->app['events']->listen('eloquent.saving:*', 'upchuck.observer@onSaving', $priority);
 		$this->app['events']->listen('eloquent.deleted:*', 'upchuck.observer@onDeleted', $priority);
 
@@ -42,7 +42,7 @@ class ServiceProvider extends LaravelServiceProvider {
 
 		// Instantiate helpers
 		$this->app->singleton('upchuck', function($app) {
-			return new Helpers($this->getConfig());
+			return new Helpers($app['config']);
 		});
 
 		// Instantiate the disk for the tmp directory, where the image was uploaded
