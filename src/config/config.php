@@ -6,7 +6,7 @@
 	 * That package's factory class s used to instante Flysystem in Upchuck and 
 	 * all of it's configs are supported.
 	 * 
-	 * See: https://github.com/GrahamCampbell/Laravel-Flysystem/blob/1.0/src/config/config.php
+	 * See: https://github.com/GrahamCampbell/Laravel-Flysystem/blob/master/config/flysystem.php
 	 *
 	 * Note, for each driver except "local", you must require the adapter package:
 	 *
@@ -18,7 +18,7 @@
 		 * Local exaample
 		 */
 		'driver'     => 'local',
-		'path'       => public_path().'/uploads',
+		'path'       => public_path('uploads'),
 		'visibility' => 'public',
 
 		/**

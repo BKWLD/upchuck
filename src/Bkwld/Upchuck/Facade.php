@@ -1,8 +1,5 @@
 <?php namespace Bkwld\Upchuck;
 
-// Dependencies
-use Config;
-
 class Facade extends \Illuminate\Support\Facades\Facade {
 
 	/**
