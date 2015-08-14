@@ -42,7 +42,7 @@ class ServiceProvider extends LaravelServiceProvider {
 
 		// Instantiate helpers
 		$this->app->singleton('upchuck', function($app) {
-			return new Helpers($app['config']);
+			return new Helpers($app['config']->get('upchuck'));
 		});
 
 		// Instantiate the disk for the tmp directory, where the image was uploaded
