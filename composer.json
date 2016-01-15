@@ -17,8 +17,8 @@
 		"league/flysystem-cached-adapter": "Required for Flysystem caching of remote disks"
 	},
 	"autoload": {
-		"psr-0": {
-			"Bkwld\\Upchuck": "src/"
+		"psr-4": {
+			"Bkwld\\Upchuck\\": "src/"
 		}
 	}
 }

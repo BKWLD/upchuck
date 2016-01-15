@@ -20,7 +20,7 @@ class ServiceProvider extends LaravelServiceProvider {
 
 		// Registers the config file for publishing to app directory
 		$this->publishes([
-			__DIR__.'/../../config/config.php' => config_path('upchuck.php')
+			__DIR__.'/../config/config.php' => config_path('upchuck.php')
 		], 'upchuck');
 
 		// Listen for Eloquent saving and deleting
@@ -38,7 +38,7 @@ class ServiceProvider extends LaravelServiceProvider {
 	public function register() {
 
 		// Merges package config with user config
-		$this->mergeConfigFrom(__DIR__.'/../../config/config.php', 'upchuck');
+		$this->mergeConfigFrom(__DIR__.'/../config/config.php', 'upchuck');
 
 		// Instantiate helpers
 		$this->app->singleton('upchuck', function($app) {
