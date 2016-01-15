@@ -3,7 +3,7 @@
 // Deps
 use Bkwld\Upchuck\Storage;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Http\Request;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 /**
  * Respond to model saving and deleting events
@@ -23,40 +23,34 @@ class Observer {
 	/**
 	 * Dependency injection
 	 *
-	 * @param Illuminate\Http\Request $request
 	 * @param Bkwld\Upchuck\Storage $storage
 	 */
-	public function __construct(Request $request, Storage $storage) {
-		$this->request = $request;
+	public function __construct(Storage $storage) {
 		$this->storage = $storage;
 	}
 
 	/**
 	 * A model is saving, check for files being uploaded
 	 *
-	 * @param Illuminate\Database\Eloquent\Model $model 
+	 * @param Illuminate\Database\Eloquent\Model $model
 	 * @return void
 	 */
 	public function onSaving(Model $model) {
 
 		// Check that the model supports uploads through Upchuck
 		if (!$this->supportsUploads($model)
-			|| !($map = $model->getUploadMap())) return;
+			|| !($attributes = $model->getUploadAttributes())) return;
 
 		// Loop through the all of the upload attributes ...
-		foreach($map as $key => $attribute) {
+		foreach($attributes as $attribute) {
 
-			// If there is a file in the input, move the upload to the
-			// config-ed disk and save the resulting URL on the model.
-			if ($this->request->hasFile($key)) {
-				$url = $this->storage->moveUpload($this->request->file($key));
+			// Check if there is an uploaded file in the upload attribute
+			if (($file = $model->getAttribute($attribute))
+				&& is_a($file, UploadedFile::class)) {
+
+				// Move the upload and get the new URL
+				$url = $this->storage->moveUpload($file);
 				$model->setUploadAttribute($attribute, $url);
-
-				// Remove the file from the request object after it's been processed. 
-				// This prevents other models that may be touched during the processing 
-				// of this request (like because of event handlers) from trying to act 
-				// on this upload.
-				$this->request->files->remove($key);
 			}
 
 			// If the attribute field is dirty, delete the old image
@@ -69,17 +63,17 @@ class Observer {
 	/**
 	 * A model has been deleted, trash all of it's files
 	 *
-	 * @param Illuminate\Database\Eloquent\Model $model 
+	 * @param Illuminate\Database\Eloquent\Model $model
 	 * @return void
 	 */
 	public function onDeleted(Model $model) {
 
 		// Check that the model supports uploads through Upchuck
 		if (!$this->supportsUploads($model)
-			|| !($map = $model->getUploadMap())) return;
+			|| !($attributes = $model->getUploadAttributes())) return;
 
 		// Loop through the all of the upload attributes ...
-		foreach($map as $key => $attribute) {
+		foreach($attributes as $attribute) {
 			if (!$url = $model->getAttribute($attribute)) continue;
 			$this->storage->delete($url);
 		}
@@ -90,11 +84,11 @@ class Observer {
 	 * Check that the model supports uploads through Upchuck.  Not detecting the
 	 * trait because it doesn't report to subclasses.
 	 *
-	 * @param Illuminate\Database\Eloquent\Model $model 
-	 * @return boolean 
+	 * @param Illuminate\Database\Eloquent\Model $model
+	 * @return boolean
 	 */
 	public function supportsUploads($model) {
-		return method_exists($model, 'getUploadMap');
+		return method_exists($model, 'getUploadAttributes');
 	}
 
 }

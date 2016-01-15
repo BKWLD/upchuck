@@ -78,7 +78,7 @@ class ServiceProvider extends LaravelServiceProvider {
 		// Instantiate observer which handles model save / delete and delegates
 		// out the saving of files
 		$this->app->singleton('upchuck.observer', function($app) {
-			return new Observer($app['request'], $app['upchuck.storage']);
+			return new Observer($app['upchuck.storage']);
 		});
 
 		// Instantiate storage class
