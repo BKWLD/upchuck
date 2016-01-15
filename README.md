@@ -34,6 +34,16 @@ class Person extends Eloquent {
 }
 ```
 
+Then, say you have a `<input type="file" name="image">` field, you would do this from your controller:
+
+```php
+$model = new Model;
+$model->fill(Input::all())
+$model->save();
+```
+
+You are filling the object with the `Input:all()` array, which includes your image data as an `UploadedFile` object keyed to the `image` attribute.  When you `save()`, Upchuck will act on the `saving` event, moving the upload into the storage you've defined in the config file, and replacing the attribute value with the URL of the file.
+
 
 ### Resizing images
 
