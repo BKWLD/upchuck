@@ -72,9 +72,10 @@ class Observer {
 		if (!$this->supportsUploads($model)
 			|| !($attributes = $model->getUploadAttributes())) return;
 
-		// Loop through the all of the upload attributes ...
+		// Loop through the all of the upload attributes and get the values using
+		// "original" so that you get the file value before it may have been cleared.
 		foreach($attributes as $attribute) {
-			if (!$url = $model->getAttribute($attribute)) continue;
+			if (!$url = $model->getOriginal($attribute)) continue;
 			$this->storage->delete($url);
 		}
 
