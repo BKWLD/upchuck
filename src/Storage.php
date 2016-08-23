@@ -93,7 +93,7 @@ class Storage {
 		$file = pathinfo($filename, PATHINFO_FILENAME);
 		$i = 1;
 		$ext = pathinfo($filename, PATHINFO_EXTENSION);
-		while ($disk>has($path = $dir.$file.'-'.$i.'.'.$ext)) { $i++; }
+		while ($disk->has($path = $dir.$file.'-'.$i.'.'.$ext)) { $i++; }
 		return $path;
 
 	}
