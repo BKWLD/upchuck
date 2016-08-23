@@ -16,7 +16,7 @@ class Storage {
 	 * @var integer
 	 */
 	private $depth = 2;
-	
+
 	/**
 	 * How many folders are in each depth
 	 *
@@ -25,7 +25,7 @@ class Storage {
 	private $length = 16;
 
 	/**
-	 * @var Bkwld\Upchuck\Helpers 
+	 * @var Bkwld\Upchuck\Helpers
 	 */
 	private $helpers;
 
@@ -47,7 +47,7 @@ class Storage {
 	 * Move an uploaded file from the /tmp directory of the local filesystem
 	 * to the configured location
 	 *
-	 * @param Symfony\Component\HttpFoundation\File\UploadedFile $file 
+	 * @param Symfony\Component\HttpFoundation\File\UploadedFile $file
 	 * @return string $url A URL to to the file, resolveable in HTML
 	 */
 	public function moveUpload(UploadedFile $file) {
@@ -66,11 +66,11 @@ class Storage {
 	/**
 	 * Create a unique directory and filename
 	 *
-	 * @param string $filename 
+	 * @param string $filename
 	 * @return string New path and filename
 	 */
 	public function makeNestedAndUniquePath($filename) {
-		
+
 		// Remove unsafe characters from the filename
 		// https://regex101.com/r/mJ3sI5/1
 		$filename = preg_replace('#[^\w-_\.]#i', '_', $filename);
@@ -98,7 +98,7 @@ class Storage {
 	 * Delete an upload
 	 *
 	 * @param string $url A URL like was returned from moveUpload()
-	 * @return void 
+	 * @return void
 	 */
 	public function delete($url) {
 

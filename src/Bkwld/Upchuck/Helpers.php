@@ -13,7 +13,7 @@ class Helpers {
 	/**
 	 * Inject dependencies
 	 *
-	 * @param array $config 
+	 * @param array $config
 	 */
 	public function __construct($config) {
 		$this->config = $config;
@@ -22,18 +22,18 @@ class Helpers {
 	/**
 	 * Check whether Upchuck manages the given URL
 	 *
-	 * @param string $url 
-	 * @return boolean 
+	 * @param string $url
+	 * @return boolean
 	 */
 	public function manages($url) {
 		return preg_match('#^'.$this->config['url_prefix'].'#', $url) > 0;
 	}
 
 	/**
-	 * Get the path on the disk given the URL.  
+	 * Get the path on the disk given the URL.
 	 *
-	 * @param string $url 
-	 * @return string 
+	 * @param string $url
+	 * @return string
 	 */
 	public function path($url) {
 		$prefix = $this->config['url_prefix'];
@@ -51,7 +51,7 @@ class Helpers {
 	/**
 	 * Get a URL of an upload given the path to an asset
 	 *
-	 * @param string $path 
+	 * @param string $path
 	 * @return string
 	 */
 	public function url($path) {

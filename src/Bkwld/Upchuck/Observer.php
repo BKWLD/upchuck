@@ -34,7 +34,7 @@ class Observer {
 	/**
 	 * A model is saving, check for files being uploaded
 	 *
-	 * @param Illuminate\Database\Eloquent\Model $model 
+	 * @param Illuminate\Database\Eloquent\Model $model
 	 * @return void
 	 */
 	public function onSaving(Model $model) {
@@ -52,9 +52,9 @@ class Observer {
 				$url = $this->storage->moveUpload($this->request->file($key));
 				$model->setUploadAttribute($attribute, $url);
 
-				// Remove the file from the request object after it's been processed. 
-				// This prevents other models that may be touched during the processing 
-				// of this request (like because of event handlers) from trying to act 
+				// Remove the file from the request object after it's been processed.
+				// This prevents other models that may be touched during the processing
+				// of this request (like because of event handlers) from trying to act
 				// on this upload.
 				$this->request->files->remove($key);
 			}
@@ -69,7 +69,7 @@ class Observer {
 	/**
 	 * A model has been deleted, trash all of it's files
 	 *
-	 * @param Illuminate\Database\Eloquent\Model $model 
+	 * @param Illuminate\Database\Eloquent\Model $model
 	 * @return void
 	 */
 	public function onDeleted(Model $model) {
@@ -90,8 +90,8 @@ class Observer {
 	 * Check that the model supports uploads through Upchuck.  Not detecting the
 	 * trait because it doesn't report to subclasses.
 	 *
-	 * @param Illuminate\Database\Eloquent\Model $model 
-	 * @return boolean 
+	 * @param Illuminate\Database\Eloquent\Model $model
+	 * @return boolean
 	 */
 	public function supportsUploads($model) {
 		return method_exists($model, 'getUploadMap');

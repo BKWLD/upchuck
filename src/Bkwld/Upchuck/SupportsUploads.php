@@ -14,14 +14,14 @@ trait SupportsUploads {
 	 *       'image',
 	 *       'bkgd' => 'image',
 	 *     ];
-	 * 
+	 *
 	 * @var array
 	 */
 
 	/**
 	 * Return the raw upload_attributes configuration
 	 *
-	 * @return array 
+	 * @return array
 	 */
 	public function getUploadAttributes() {
 		if (!isset($this->upload_attributes)) return [];
@@ -29,7 +29,7 @@ trait SupportsUploads {
 	}
 
 	/**
-	 * Massage the attribute configuration so that all keys represent input fields 
+	 * Massage the attribute configuration so that all keys represent input fields
 	 * and all values represent model attributes.  If a node doesn't have key and
 	 * val, the val is used for both.
 	 *
@@ -47,8 +47,8 @@ trait SupportsUploads {
 	 * Set a model attribute for an uploaded file to the URL of that file. Uses
 	 * `fill()` so that mass assignment prevention will apply.
 	 *
-	 * @param string $attribute 
-	 * @param string $url 
+	 * @param string $attribute
+	 * @param string $url
 	 */
 	public function setUploadAttribute($attribute, $url) {
 		$this->fill([$attribute => $url]);

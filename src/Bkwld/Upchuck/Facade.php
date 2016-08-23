@@ -8,7 +8,7 @@ class Facade extends \Illuminate\Support\Facades\Facade {
 	/**
 	 * Get a URL given the path to an asset uploaded via Upchuck
 	 *
-	 * @param string $path 
+	 * @param string $path
 	 * @return string
 	 */
 	public static function url($path) {
@@ -18,11 +18,11 @@ class Facade extends \Illuminate\Support\Facades\Facade {
 	/**
 	 * Return the Flysystem remote disk as the main facade so
 	 * the remote disk can be easily interacted with
-	 * 
+	 *
 	 * @return string
 	 */
-	protected static function getFacadeAccessor() { 
-		return 'upchuck.disk'; 
+	protected static function getFacadeAccessor() {
+		return 'upchuck.disk';
 	}
 
 }

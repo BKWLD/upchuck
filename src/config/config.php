@@ -1,11 +1,11 @@
 <?php return [
-	
+
 	/**
-	 * Flysystem mount config for the destination of your uploads. For other 
+	 * Flysystem mount config for the destination of your uploads. For other
 	 * examples, check out the source of GrahamCampbell/Laravel-Flysystem config.
-	 * That package's factory class s used to instante Flysystem in Upchuck and 
+	 * That package's factory class s used to instante Flysystem in Upchuck and
 	 * all of it's configs are supported.
-	 * 
+	 *
 	 * See: https://github.com/GrahamCampbell/Laravel-Flysystem/blob/1.0/src/config/config.php
 	 *
 	 * Note, for each driver except "local", you must require the adapter package:
@@ -37,7 +37,7 @@
 	 * Enable Flysystem caching using Laravel's current cache provider.  You must
 	 * require Flysystem's cache adapter package, league/flysystem-cached-adapter,
 	 * if enabled.  You should enable this if you are using a non-local disk.
-	 * 
+	 *
 	 * See: http://flysystem.thephpleague.com/caching/
 	 */
 	'cache' => false,
