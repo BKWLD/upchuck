@@ -16,7 +16,7 @@ class Storage {
 	 * @var integer
 	 */
 	private $depth = 2;
-	
+
 	/**
 	 * How many folders are in each depth
 	 *
@@ -25,7 +25,7 @@ class Storage {
 	private $length = 16;
 
 	/**
-	 * @var Bkwld\Upchuck\Helpers 
+	 * @var Bkwld\Upchuck\Helpers
 	 */
 	private $helpers;
 
@@ -47,7 +47,7 @@ class Storage {
 	 * Move an uploaded file from the /tmp directory of the local filesystem
 	 * to the configured location
 	 *
-	 * @param Symfony\Component\HttpFoundation\File\UploadedFile $file 
+	 * @param Symfony\Component\HttpFoundation\File\UploadedFile $file
 	 * @return string $url A URL to to the file, resolveable in HTML
 	 */
 	public function moveUpload(UploadedFile $file) {
@@ -66,11 +66,15 @@ class Storage {
 	/**
 	 * Create a unique directory and filename
 	 *
-	 * @param string $filename 
+	 * @param string $filename
+	 * @param League\Flysystem\Filesystem|void $disk
 	 * @return string New path and filename
 	 */
-	public function makeNestedAndUniquePath($filename) {
-		
+	public function makeNestedAndUniquePath($filename, $disk = null) {
+
+		// If no disk defined, get it from the current mount mananger
+		if (empty($disk)) $disk = $this->manager->getFilesystem('disk');
+
 		// Remove unsafe characters from the filename
 		// https://regex101.com/r/mJ3sI5/1
 		$filename = preg_replace('#[^\w-_\.]#i', '_', $filename);
@@ -83,13 +87,13 @@ class Storage {
 
 		// If this file doesn't already exist, return it
 		$path = $dir.$filename;
-		if (!$this->manager->has('disk://'.$path)) return $path;
+		if (!$disk->has($path)) return $path;
 
 		// Get a unique filename for the file and return it
 		$file = pathinfo($filename, PATHINFO_FILENAME);
 		$i = 1;
 		$ext = pathinfo($filename, PATHINFO_EXTENSION);
-		while ($this->manager->has('disk://'.($path = $dir.$file.'-'.$i.'.'.$ext))) { $i++; }
+		while ($disk>has($path = $dir.$file.'-'.$i.'.'.$ext)) { $i++; }
 		return $path;
 
 	}
@@ -98,7 +102,7 @@ class Storage {
 	 * Delete an upload
 	 *
 	 * @param string $url A URL like was returned from moveUpload()
-	 * @return void 
+	 * @return void
 	 */
 	public function delete($url) {
 

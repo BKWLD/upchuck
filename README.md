@@ -20,7 +20,7 @@ Then, to enable upload support for your models, use the `Bkwld\Upchuck\SupportsU
 
 ```php
 class Person extends Eloquent {
-	
+
 	// Use the trait
 	use Bkwld\Upchuck\SupportsUploads;
 
@@ -72,4 +72,3 @@ protected $upload_attributes = [
 	'types.stats.image' => 'image',
 ];
 ```
-
