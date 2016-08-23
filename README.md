@@ -2,14 +2,14 @@
 
 [![Packagist](https://img.shields.io/packagist/v/bkwld/upchuck.svg)](https://packagist.org/packages/bkwld/upchuck)
 
-Upchuck is a simple, automatic handler of file uploads for [Laravel's](http://laravel.com/) [Eloquent](http://laravel.com/docs/eloquent) models using using [Flysystem](http://flysystem.thephpleague.com/).  It does not attempt to do anything besides let the developer treat file uploads like regular input fields.  It does this by listening to Eloquent `saving` events,  checking the request input for files with names that you have whitelisted, pushing those files to "disk" of your choosing, and then storing the publically accessible URL in the model attribute for that input.
+Upchuck is a simple, automatic handler of file uploads for [Laravel's](http://laravel.com/) [Eloquent](http://laravel.com/docs/eloquent) models using using [Flysystem](http://flysystem.thephpleague.com/).  It does not attempt to do anything besides let the developer treat file uploads like regular input fields.  It does this by listening to Eloquent `saving` events,  checking the model attribute for `UploadedFile` instances, pushing those files to "disk" of your choosing, and then storing the publically accessible URL in the model attribute for that input.
 
 
 ## Installation
 
-1. Add to your project: `composer require bkwld/upchuck:~1.0`
+1. Add to your project: `composer require bkwld/upchuck:~2.0`
 2. Add Upchuck as a provider in your app/config/app.php's provider list: `'Bkwld\Upchuck\ServiceProvider',`
-3. Publish the config: `php artisan config:publish bkwld/upchuck`
+3. Publish the config: `php artisan vendor:publish --provider=="Bkwld\Upchuck\ServiceProvider"`
 
 
 ## Usage
@@ -25,50 +25,26 @@ class Person extends Eloquent {
 	use Bkwld\Upchuck\SupportsUploads;
 
 	// Define the uploadable attributes
-	protected $upload_attributes = [
-
-		// Both the file input field and the model attribute are named "image"
-		'image',
-
-		// The input file field is named "portrait" but the model attribute is
-		// named "headshot"
-		'portrait' => 'headshot',
-	];
+	protected $upload_attributes = [ 'image', 'pdf', ];
 
 	// Since the upload handling happens via model events, it acts like a mass
 	// assignment.  As such, Upchuck sets attributes via `fill()` so you can
 	// control the setting.
-	protected $fillable = ['image', 'headshot'];
+	protected $fillable = ['image', 'pdf'];
 }
 ```
+
+Then, say you have a `<input type="file" name="image">` field, you would do this from your controller:
+
+```php
+$model = new Model;
+$model->fill(Input::all())
+$model->save();
+```
+
+You are filling the object with the `Input:all()` array, which includes your image data as an `UploadedFile` object keyed to the `image` attribute.  When you `save()`, Upchuck will act on the `saving` event, moving the upload into the storage you've defined in the config file, and replacing the attribute value with the URL of the file.
 
 
 ### Resizing images
 
 If your app supports uploading files you are probably also dealing with needing to resize uploaded images.  We (BKWLD) use our [Croppa](https://github.com/BKWLD/croppa) package to resize images using specially formatted URLs.  If you are looking for an model-upload package that also resizes images, you might want to check out [Stapler](https://github.com/CodeSleeve/stapler).
-
-
-### Deleting images
-
-If you update a model attribute to a false-y value, Upchuck will delete the old referenced file.  Thus, if your app allows users to delete files, consider using markup like:
-
-```html
-<input type="file" name="image">
-Delete file <input type="checkbox" name="image" value="">
-```
-
-### Array-ish inputs
-
-If your field is like this:
-
-```html
-<input type="file" name="types[marquee][image]">
-```
-
-Setup your `$upload_attributes` like:
-
-```php
-protected $upload_attributes = [
-	'types.stats.image' => 'image',
-];
-```

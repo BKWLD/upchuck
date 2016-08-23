@@ -9,7 +9,7 @@
 		}
 	],
 	"require": {
-		"php": ">=5.4.0",
+		"php": ">=5.5.0",
 		"illuminate/support": "^5",
 		"graham-campbell/flysystem": "^3"
 	},
@@ -17,8 +17,8 @@
 		"league/flysystem-cached-adapter": "Required for Flysystem caching of remote disks"
 	},
 	"autoload": {
-		"psr-0": {
-			"Bkwld\\Upchuck": "src/"
+		"psr-4": {
+			"Bkwld\\Upchuck\\": "src/"
 		}
 	}
 }
