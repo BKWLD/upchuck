@@ -67,9 +67,13 @@ class Storage {
 	 * Create a unique directory and filename
 	 *
 	 * @param string $filename
+	 * @param League\Flysystem\Filesystem|void $disk
 	 * @return string New path and filename
 	 */
-	public function makeNestedAndUniquePath($filename) {
+	public function makeNestedAndUniquePath($filename, $disk = null) {
+
+		// If no disk defined, get it from the current mount mananger
+		if (empty($disk)) $disk = $this->manager->getFilesystem('disk');
 
 		// Remove unsafe characters from the filename
 		// https://regex101.com/r/mJ3sI5/1
@@ -83,13 +87,13 @@ class Storage {
 
 		// If this file doesn't already exist, return it
 		$path = $dir.$filename;
-		if (!$this->manager->has('disk://'.$path)) return $path;
+		if (!$disk->has($path)) return $path;
 
 		// Get a unique filename for the file and return it
 		$file = pathinfo($filename, PATHINFO_FILENAME);
 		$i = 1;
 		$ext = pathinfo($filename, PATHINFO_EXTENSION);
-		while ($this->manager->has('disk://'.($path = $dir.$file.'-'.$i.'.'.$ext))) { $i++; }
+		while ($disk>has($path = $dir.$file.'-'.$i.'.'.$ext)) { $i++; }
 		return $path;
 
 	}
