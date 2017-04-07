@@ -32,10 +32,15 @@ class Observer {
 	/**
 	 * A model is saving, check for files being uploaded
 	 *
-	 * @param Illuminate\Database\Eloquent\Model $model
+	 * @param  string $event
+	 * @param  array $payload containg:
+	 *   - Illuminate\Database\Eloquent\Model
 	 * @return void
 	 */
-	public function onSaving(Model $model) {
+	public function onSaving($event, $payload) {
+
+		// Destructure params
+		list($model) = $payload;
 
 		// Check that the model supports uploads through Upchuck
 		if (!$this->supportsUploads($model)
@@ -63,10 +68,15 @@ class Observer {
 	/**
 	 * A model has been deleted, trash all of it's files
 	 *
-	 * @param Illuminate\Database\Eloquent\Model $model
+	 * @param  string $event
+	 * @param  array $payload containg:
+	 *   - Illuminate\Database\Eloquent\Model
 	 * @return void
 	 */
-	public function onDeleted(Model $model) {
+	public function onDeleted($event, $payload) {
+
+		// Destructure params
+		list($model) = $payload;
 
 		// Check that the model supports uploads through Upchuck
 		if (!$this->supportsUploads($model)
