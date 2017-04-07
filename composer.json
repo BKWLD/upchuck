@@ -13,6 +13,9 @@
 		"illuminate/support": "^5",
 		"graham-campbell/flysystem": "^3"
 	},
+	"conflict": {
+        "laravel/framework": "<5.4.0"
+    },
 	"suggest": {
 		"league/flysystem-cached-adapter": "Required for Flysystem caching of remote disks"
 	},
