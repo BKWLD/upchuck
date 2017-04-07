@@ -48,11 +48,4 @@
 	 */
 	'url_prefix' => '/uploads/',
 	// 'url_prefix' => 'https://your-bucket.s3.amazonaws.com/uploads/',
-
-	/**
-	 * Laravel event listeners support priorities.  Setting this above the default
-	 * (0) makes Upchuck's processing happen first, allowing other observers to
-	 * interact with the stored upload path.
-	 */
-	'listen_priority' => 5,
 ];
