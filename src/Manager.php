@@ -27,7 +27,7 @@ class Manager extends GrahamCampbellFlysystemManager {
 	 * @throws InvalidArgumentException
 	 * @return array
 	 */
-	public function getConnectionConfig($name = null) {
+	public function getConnectionConfig(string $name = null) {
 
 		// Lookup the connection config
 		$config = $this->config->get($this->getConfigName().'.disk');
@@ -51,7 +51,7 @@ class Manager extends GrahamCampbellFlysystemManager {
 	 * @throws InvalidArgumentException
 	 * @return array
 	 */
-	protected function getCacheConfig($name = null) {
+	protected function getCacheConfig(string $name = null) {
 		return [
 			'name'      => 'illuminate',
 			'driver'    => 'illuminate',
