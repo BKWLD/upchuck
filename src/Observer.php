@@ -47,6 +47,7 @@ class Observer {
             || !($attributes = $model->getUploadAttributes())) return;
 
         // Loop through the all of the upload attributes ...
+        event(new Events\HandlingSaving($model));
         foreach($attributes as $attribute) {
 
             // Check if there is an uploaded file in the upload attribute
@@ -63,6 +64,7 @@ class Observer {
                 $this->storage->delete($old);
             }
         }
+        event(new Events\HandledSaving($model));
     }
 
     /**
@@ -84,11 +86,12 @@ class Observer {
 
         // Loop through the all of the upload attributes and get the values using
         // "original" so that you get the file value before it may have been cleared.
+        event(new Events\HandlingDeleted($model));
         foreach($attributes as $attribute) {
             if (!$url = $model->getOriginal($attribute)) continue;
             $this->storage->delete($url);
         }
-
+        event(new Events\HandledDeleted($model));
     }
 
     /**
