@@ -11,7 +11,6 @@
     "require": {
         "php": ">=5.5.0",
         "illuminate/database": "^5",
-        "illuminate/event": "^5",
         "illuminate/queue": "^5",
         "illuminate/support": "^5",
         "graham-campbell/flysystem": "^3|^4"
