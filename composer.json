@@ -1,27 +1,27 @@
 {
-	"name": "bkwld/upchuck",
-	"description": "A simple, automatic handler of file uploads for Laravel's Eloquent models using using Flysystem.",
-	"license": "MIT",
-	"authors": [
-		{
-			"name": "Robert Reinhard",
-			"email": "info@bkwld.com"
-		}
-	],
-	"require": {
-		"php": ">=5.5.0",
-		"illuminate/support": "^5",
-		"graham-campbell/flysystem": "^3|^4"
-	},
-	"conflict": {
-		"laravel/framework": "<5.4.0"
-	},
-	"suggest": {
-		"league/flysystem-cached-adapter": "Required for Flysystem caching of remote disks"
-	},
-	"autoload": {
-		"psr-4": {
-			"Bkwld\\Upchuck\\": "src/"
-		}
-	}
+    "name": "bkwld/upchuck",
+    "description": "A simple, automatic handler of file uploads for Laravel's Eloquent models using using Flysystem.",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Robert Reinhard",
+            "email": "info@bkwld.com"
+        }
+    ],
+    "require": {
+        "php": ">=5.5.0",
+        "illuminate/support": "^5",
+        "graham-campbell/flysystem": "^3|^4"
+    },
+    "conflict": {
+        "laravel/framework": "<5.4.0"
+    },
+    "suggest": {
+        "league/flysystem-cached-adapter": "Required for Flysystem caching of remote disks"
+    },
+    "autoload": {
+        "psr-4": {
+            "Bkwld\\Upchuck\\": "src/"
+        }
+    }
 }
