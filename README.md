@@ -8,8 +8,8 @@ Upchuck is a simple, automatic handler of file uploads for [Laravel's](http://la
 ## Installation
 
 1. Add to your project: `composer require bkwld/upchuck:~2.0`
-2. Add Upchuck as a provider in your app/config/app.php's provider list: `'Bkwld\Upchuck\ServiceProvider',`
-3. Publish the config: `php artisan vendor:publish --provider=="Bkwld\Upchuck\ServiceProvider"`
+2. *Laravel < 5.5 only* Add Upchuck as a provider in your app/config/app.php's provider list: `'Bkwld\Upchuck\ServiceProvider',`
+3. Publish the config: `php artisan vendor:publish --provider="Bkwld\Upchuck\ServiceProvider"`
 
 
 ## Usage
