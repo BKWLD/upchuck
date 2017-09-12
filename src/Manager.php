@@ -11,52 +11,52 @@ use InvalidArgumentException;
  */
 class Manager extends GrahamCampbellFlysystemManager {
 
-	/**
-	 * Get the configuration name.
-	 *
-	 * @return string
-	 */
-	protected function getConfigName() {
-		return 'upchuck';
-	}
+    /**
+     * Get the configuration name.
+     *
+     * @return string
+     */
+    protected function getConfigName() {
+        return 'upchuck';
+    }
 
-	/**
-	 * Get the configuration for a connection.
-	 *
-	 * @param string $name Not used but part of parent
-	 * @throws InvalidArgumentException
-	 * @return array
-	 */
-	public function getConnectionConfig(string $name = null) {
+    /**
+     * Get the configuration for a connection.
+     *
+     * @param string $name Not used but part of parent
+     * @throws InvalidArgumentException
+     * @return array
+     */
+    public function getConnectionConfig(string $name = null) {
 
-		// Lookup the connection config
-		$config = $this->config->get($this->getConfigName().'.disk');
+        // Lookup the connection config
+        $config = $this->config->get($this->getConfigName().'.disk');
 
-		// Add cache info the config
-		if ($this->config->get($this->getConfigName().'.cache')) {
-			$config['cache'] = $this->getCacheConfig();
-		}
+        // Add cache info the config
+        if ($this->config->get($this->getConfigName().'.cache')) {
+            $config['cache'] = $this->getCacheConfig();
+        }
 
-		// Use the driver as the name.
-		$config['name'] = $config['driver'];
+        // Use the driver as the name.
+        $config['name'] = $config['driver'];
 
-		// Return adapter config in the format GrahamCampbell/Flysystem expects
-		return $config;
-	}
+        // Return adapter config in the format GrahamCampbell/Flysystem expects
+        return $config;
+    }
 
-	/**
-	 * Get the cache configuration.  Upchuck only uses Illuminate caching.
-	 *
-	 * @param string $name Not used but part of parent
-	 * @throws InvalidArgumentException
-	 * @return array
-	 */
-	protected function getCacheConfig(string $name = null) {
-		return [
-			'name'      => 'illuminate',
-			'driver'    => 'illuminate',
-			'key'       => 'upchuck',
-		];
-	}
+    /**
+     * Get the cache configuration.  Upchuck only uses Illuminate caching.
+     *
+     * @param string $name Not used but part of parent
+     * @throws InvalidArgumentException
+     * @return array
+     */
+    protected function getCacheConfig(string $name = null) {
+        return [
+            'name'      => 'illuminate',
+            'driver'    => 'illuminate',
+            'key'       => 'upchuck',
+        ];
+    }
 
 }
