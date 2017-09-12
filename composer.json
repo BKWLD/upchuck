@@ -23,5 +23,12 @@
         "psr-4": {
             "Bkwld\\Upchuck\\": "src/"
         }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Bkwld\\Upchuck\\ServiceProvider"
+            ]
+        }
     }
 }
