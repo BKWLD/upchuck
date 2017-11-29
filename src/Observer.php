@@ -61,8 +61,10 @@ class Observer {
                 $model->setUploadAttribute($attribute, $url);
             }
 
-            // If the attribute field is dirty, delete the old image
-            if ($model->isDirty($attribute) && ($old = $model->getOriginal($attribute))) {
+            // If the attribute field is dirty, delete the old file
+            if ($model->isDirty($attribute)
+                && !$this->keepsFilesOnDelete($model)
+                && ($old = $model->getOriginal($attribute))) {
                 $this->storage->delete($old);
             }
         }
