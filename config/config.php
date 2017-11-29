@@ -48,4 +48,9 @@
      */
     'url_prefix' => '/uploads/',
     // 'url_prefix' => 'https://your-bucket.s3.amazonaws.com/uploads/',
+
+    /**
+     * Whether to delete files when a model is soft deleted.
+     */
+    'keep_files_when_soft_deleted' => false,
 ];

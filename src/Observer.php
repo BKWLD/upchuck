@@ -3,6 +3,7 @@
 // Deps
 use Bkwld\Upchuck\Storage;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 /**
@@ -11,22 +12,23 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
 class Observer {
 
     /**
-     * @var Illuminate\Http\Request
-     */
-    private $request;
-
-    /**
      * @var Bkwld\Upchuck\Storage
      */
     private $storage;
+
+    /**
+     * @var array The Upchuck config array
+     */
+    private $config;
 
     /**
      * Dependency injection
      *
      * @param Bkwld\Upchuck\Storage $storage
      */
-    public function __construct(Storage $storage) {
+    public function __construct(Storage $storage, $config) {
         $this->storage = $storage;
+        $this->config = $config;
     }
 
     /**
@@ -80,6 +82,10 @@ class Observer {
         // Destructure params
         list($model) = $payload;
 
+        // If the model is soft deleted and the config states to NOT delete if
+        // soft deleted, abort here.
+        if ($this->keepsFilesOnDelete($model)) return;
+
         // Check that the model supports uploads through Upchuck
         if (!$this->supportsUploads($model)
             || !($attributes = $model->getUploadAttributes())) return;
@@ -92,6 +98,18 @@ class Observer {
             $this->storage->delete($url);
         }
         event(new Events\HandledDeleted($model));
+    }
+
+    /**
+     * Should the model not delete files on delete
+     *
+     * @param Illuminate\Database\Eloquent\Model $model
+     * @return boolean
+     */
+    public function keepsFilesOnDelete($model)
+    {
+        return in_array(SoftDeletes::class, class_uses_recursive($model))
+            && !empty($this->config['keep_files_when_soft_deleted']);
     }
 
     /**
