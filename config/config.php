@@ -53,4 +53,14 @@
      * Whether to delete files when a model is soft deleted.
      */
     'keep_files_when_soft_deleted' => false,
+
+    /**
+     * How deep to nest files within subdirectories
+     */
+    'depth' => 2,
+
+    /**
+     * How many folders will be created in each depth
+     */
+    'length' => 16,
 ];

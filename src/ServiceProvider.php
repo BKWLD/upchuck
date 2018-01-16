@@ -83,7 +83,12 @@ class ServiceProvider extends LaravelServiceProvider {
 
         // Instantiate storage class
         $this->app->singleton('upchuck.storage', function($app) {
-            return new Storage($app['upchuck.manager'], $app['upchuck']);
+            return new Storage(
+                $app['upchuck.manager'],
+                $app['upchuck'],
+                $app['config']->get('upchuck.depth'),
+                $app['config']->get('upchuck.length')
+            );
         });
 
     }

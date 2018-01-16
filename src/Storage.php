@@ -15,32 +15,34 @@ class Storage {
      *
      * @var integer
      */
-    private $depth = 2;
+    protected $depth;
 
     /**
      * How many folders are in each depth
      *
      * @var integer
      */
-    private $length = 16;
+    protected $length;
 
     /**
      * @var Bkwld\Upchuck\Helpers
      */
-    private $helpers;
+    protected $helpers;
 
     /**
      * @var League\Flysystem\MountManager
      */
-    private $manager;
-
+    protected $manager;
 
     /**
      * Dependency injection
      */
-    public function __construct(MountManager $manager, Helpers $helpers) {
+    public function __construct(MountManager $manager, Helpers $helpers,
+        $depth, $length) {
         $this->manager = $manager;
         $this->helpers = $helpers;
+        $this->depth = $depth;
+        $this->length = $length;
     }
 
     /**
