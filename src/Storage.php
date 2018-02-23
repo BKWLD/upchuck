@@ -38,7 +38,7 @@ class Storage {
      * Dependency injection
      */
     public function __construct(MountManager $manager, Helpers $helpers,
-        $depth, $length) {
+        $depth = 2, $length = 16) {
         $this->manager = $manager;
         $this->helpers = $helpers;
         $this->depth = $depth;
