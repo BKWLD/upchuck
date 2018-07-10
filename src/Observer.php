@@ -110,6 +110,10 @@ class Observer {
      */
     public function keepsFilesOnDelete($model)
     {
+        // Always allow deletion of files if model is force deleting...
+        if ($model->isForceDeleting()) {
+            return false;
+        }
         return in_array(SoftDeletes::class, class_uses_recursive($model))
             && !empty($this->config['keep_files_when_soft_deleted']);
     }
